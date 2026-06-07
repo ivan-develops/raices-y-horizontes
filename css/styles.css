@@ -303,16 +303,50 @@ p { font-size: 1rem; font-weight: 300; color: var(--taupe); line-height: 1.85; }
   padding-bottom: var(--space-xl);
 }
 
-.hero__bg {
+/* ── Hero slideshow ── */
+.hero__slides {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(160deg, rgba(28,26,23,0.3) 0%, rgba(28,26,23,0.6) 60%, rgba(28,26,23,0.82) 100%),
-    url('img/hero-bg.jpg') center/cover no-repeat;
-  transform: scale(1.05);
-  transition: transform 8s ease-out;
+  overflow: hidden;
 }
-.hero__bg.loaded { transform: scale(1); }
+
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.06);
+  transition:
+    opacity 1.6s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 8s cubic-bezier(0.2, 0, 0.4, 1);
+  will-change: opacity, transform;
+}
+
+.hero__slide--active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Posición focal adaptada por slide */
+.hero__slide:nth-child(1) { background-position: center 30%; }  /* panorámica ceremonia */
+.hero__slide:nth-child(2) { background-position: center 20%; }  /* pareja — centra caras */
+.hero__slide:nth-child(3) { background-position: center center; } /* anillos macro */
+
+/* Overlay degradado fijo (independiente de las slides) */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(28,26,23,0.18) 0%,
+    rgba(28,26,23,0.52) 55%,
+    rgba(28,26,23,0.82) 100%
+  );
+  pointer-events: none;
+}
+
+/* (dots removed) */
 
 .hero__content {
   position: relative;

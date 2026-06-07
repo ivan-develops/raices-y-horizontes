@@ -125,7 +125,14 @@
      ══════════════════════════════════════ -->
 <section id="inicio" class="hero" aria-label="Sección principal">
 
-  <div class="hero__bg" style="background-image: url('img/hero-bg.jpg')" role="img" aria-label="Pareja en sesión fotográfica de bodas"></div>
+  <!-- Slideshow de fondo -->
+  <div class="hero__slides" aria-hidden="true">
+    <div class="hero__slide hero__slide--active" style="background-image: url('img/hero-bg-1.jpg')"></div>
+    <div class="hero__slide" style="background-image: url('img/hero-bg-2.jpg')"></div>
+    <div class="hero__slide" style="background-image: url('img/hero-bg-3.jpg')"></div>
+  </div>
+  <!-- Overlay degradado fijo encima de las slides -->
+  <div class="hero__overlay" aria-hidden="true"></div>
 
   <div class="container">
     <div class="hero__content">

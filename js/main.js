@@ -54,15 +54,28 @@
     });
   }
 
-  /* ── Hero bg load ── */
-  const heroBg = document.querySelector('.hero__bg');
-  if (heroBg) {
-    const tempImg = new Image();
-    tempImg.onload = () => heroBg.classList.add('loaded');
-    tempImg.src = heroBg.style.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
-    // Fallback
-    setTimeout(() => heroBg.classList.add('loaded'), 200);
-  }
+  /* ── Hero slideshow ── */
+  (function () {
+    const slides = document.querySelectorAll('.hero__slide');
+    if (!slides.length) return;
+
+    let current = 0;
+    const COUNT = slides.length;
+
+    function next() {
+      slides[current].classList.remove('hero__slide--active');
+      current = (current + 1) % COUNT;
+      slides[current].classList.add('hero__slide--active');
+    }
+
+    // Pre-cargar imágenes para evitar flash
+    slides.forEach(slide => {
+      const url = slide.style.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
+      if (url) { const img = new Image(); img.src = url; }
+    });
+
+    setInterval(next, 5000);
+  })();
 
   /* ── Scroll reveal ── */
   const reveals = document.querySelectorAll('.reveal');
@@ -241,16 +254,7 @@
     statNums.forEach(el => statsIO.observe(el));
   }
 
-  /* ── Parallax hero ── */
-  const heroBgEl = document.querySelector('.hero__bg');
-  if (heroBgEl) {
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-      if (y < window.innerHeight) {
-        heroBgEl.style.transform = `translateY(${y * 0.25}px)`;
-      }
-    }, { passive: true });
-  }
+
 
   /* ── Active nav link on scroll ── */
   const sections = document.querySelectorAll('section[id]');
